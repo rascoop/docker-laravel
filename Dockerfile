@@ -1,9 +1,12 @@
 FROM php:7-fpm
 MAINTAINER Richard Scoop <richard.scoop@gmail.com>
 
-RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client \
-    && docker-php-ext-install mcrypt pdo_mysql
-RUN apt-get upgrade -y
+RUN apt-get update -qq && apt-get install -y -qq libmcrypt-dev mysql-client git curl wget\
+    && docker-php-ext-install mcrypt pdo_mysql && apt-get upgrade -y
+
+# Install composer
+RUN bash -c "wget http://getcomposer.org/composer.phar && mv composer.phar /usr/local/bin/composer"
+
 
 #The following lines allows the first user of the host
 #to remain the owner of the files while they are shared with the container
