@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql
+    container_name: appnamemysql
+    volumes:
+      - ~/projects/appname/db:/var/lib/mysql
+      - ../data/mysql/config:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=appnamedb
+      - MYSQL_USER=appnameusr
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3306:3306"
+
+  php:
+      image: rascoop/php7-fpm-laravel
+      container_name: appnamephp
+      volumes:
+          - ../src:/var/www/
+
+      ports:
+          - "9000:9000"
+
+  web:
+      image: nginx:alpine
+      container_name: appnameweb
+      restart: always
+      ports:
+          - "80:80" # web
+      volumes_from:
+        - php
+      volumes:
+        - ../data/nginx/config/:/etc/nginx/conf.d/ # nginx sites ( in case you recreate the container )
+        - ../data/nginx/logs:/var/logs
+      depends_on:
+        - php
+        - mysql
+
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      ports:
+          - 81:80
+      depends_on:
+          - mysql
+      environment:
+          PMA_HOST: mysql
