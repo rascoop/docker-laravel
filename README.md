@@ -24,3 +24,5 @@ The reason for this is that when inside the container the commands are run as ro
  
 Hope this helps you setup a development environment faster. 
 
+###xdebug
+To enable xdebug please mount a volume that points to <code>/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini</code>
