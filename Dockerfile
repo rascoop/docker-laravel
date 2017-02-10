@@ -1,8 +1,8 @@
 FROM php:7-fpm
 MAINTAINER Richard Scoop <richard.scoop@gmail.com>
 
-RUN apt-get update -qq && apt-get install -y -qq libmcrypt-dev mysql-client git curl wget unzip \
-    && docker-php-ext-install mcrypt pdo_mysql && apt-get upgrade -y
+RUN apt-get update -qq && apt-get install -y libmcrypt-dev mysql-client git curl wget unzip \
+    && apt-get upgrade -y
 
 # Install composer
 #RUN bash -c "wget http://getcomposer.org/composer.phar && mv composer.phar /usr/local/bin/composer"
@@ -10,6 +10,9 @@ RUN apt-get update -qq && apt-get install -y -qq libmcrypt-dev mysql-client git 
 # Install PECL extensions
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
+RUN docker-php-ext-install mcrypt pdo_mysql
+
+
 
 #The following lines allows the first user of the host
 #to remain the owner of the files while they are shared with the container
