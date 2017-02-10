@@ -7,6 +7,9 @@ RUN apt-get update -qq && apt-get install -y -qq libmcrypt-dev mysql-client git 
 # Install composer
 #RUN bash -c "wget http://getcomposer.org/composer.phar && mv composer.phar /usr/local/bin/composer"
 
+# Install PECL extensions
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
 
 #The following lines allows the first user of the host
 #to remain the owner of the files while they are shared with the container
