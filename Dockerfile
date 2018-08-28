@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 MAINTAINER Richard Scoop <richard.scoop@gmail.com>
 
 #The following lines allows the first user of the host
@@ -6,7 +6,7 @@ MAINTAINER Richard Scoop <richard.scoop@gmail.com>
 #1000 is the uid and gid of the host user, change if yours is not 1000
 
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y \
-    && apt-get install -y -qq git libmcrypt-dev libpng-dev libjpeg-dev libpq-dev mysql-client curl \
+    && apt-get install -y -qq git libmcrypt-dev libpng-dev libjpeg-dev libpq-dev mysql-client curl unzip\
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-install mcrypt gd mbstring pdo pdo_mysql zip \
